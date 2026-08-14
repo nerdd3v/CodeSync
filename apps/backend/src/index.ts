@@ -1,5 +1,7 @@
 import express from "express";
 import env from "dotenv";
+import mongoose from "mongoose";
+import {userModel, interviewModel, messageModel} from "db"
 
 env.config()
 
@@ -11,9 +13,16 @@ app.get("/", (req, res)=>{
     })
 })
 
+
+
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT ,()=>{
 
-    console.log("listening on ", PORT)
-})
+const startServer = async()=>{
+    await mongoose.connect("localhost:27017")
+    app.listen(PORT ,()=>{
+        console.log("listening on ", PORT)
+    })
+}
+
+await startServer();
